@@ -16,6 +16,7 @@ namespace MatchGame
         DispatcherTimer timer = new DispatcherTimer();
         int tenthsOfSecondsElapsed;
         int matchesFound;
+        List<string> highScore = new List<string>();
 
         public MainWindow()
         {
@@ -32,6 +33,7 @@ namespace MatchGame
             if(matchesFound == 8)
             {
                 timer.Stop();
+                highScore.Add(timeTextBlock.Text);
                 timeTextBlock.Text = timeTextBlock.Text + "- Play again?";
             }
         }
@@ -54,7 +56,7 @@ namespace MatchGame
             //display
             foreach(TextBlock textBlock in mainGrid.Children.OfType<TextBlock>())
             {
-                if(textBlock.Name != "timeTextBlock")
+                if(textBlock.Name != "timeTextBlock" && textBlock.Name != "HighScore")
                 {
                     textBlock.Visibility = Visibility.Visible;
                     int index = random.Next(animalEmoji.Count);
@@ -100,6 +102,8 @@ namespace MatchGame
         {
             if(matchesFound == 8)
             {
+                var res = string.Join(",", highScore);
+                HighScore.Text = res;
                 SetUpGame();
             }
         }
